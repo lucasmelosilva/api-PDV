@@ -9,7 +9,10 @@ export class ProductCreateController implements Controller {
   ) {}
 
   async handle (request: HttpRequest): Promise<HttpResponse> {
-    this.validation.validate(request.body)
-    return null
+    const error = this.validation.validate(request.body)
+    return {
+      status: 400,
+      body: error
+    }
   }
 }
