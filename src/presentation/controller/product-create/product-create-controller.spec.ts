@@ -85,4 +85,19 @@ describe('ProductCreate Controller', () => {
     await sut.handle(request)
     expect(addSpy).toHaveBeenCalledWith(request.body)
   })
+
+  it('should return 200 when AddProduct success', async () => {
+    const { sut } = makeSut()
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response).toEqual({
+      status: 200,
+      body: {
+        id: 'any-id',
+        name: 'any-name',
+        barCode: 'any-bar-code',
+        imageUrl: 'any-image-',
+        price: 23.1
+      }
+    })
+  })
 })
