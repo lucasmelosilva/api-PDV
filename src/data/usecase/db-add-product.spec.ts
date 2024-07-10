@@ -51,4 +51,12 @@ describe('DbAddProduct', () => {
     await sut.add(product)
     expect(addProductSpy).toHaveBeenCalledWith(product)
   })
+
+  it('should return null if AddProductRepository returns null', async () => {
+    const { sut, addProductRepositoryStub } = makeSut()
+    jest.spyOn(addProductRepositoryStub, 'addProduct').mockReturnValueOnce(new Promise(resolve => resolve(null as unknown as ProductModel)))
+    const product = makeFakeProduct()
+    const result = await sut.add(product)
+    expect(result).toBeNull()
+  })
 })
