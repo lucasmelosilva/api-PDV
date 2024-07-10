@@ -11,7 +11,7 @@ function makeAddProductRepositoryStub (): AddProductRepository {
         id: 'any-id',
         name: 'any-name',
         barCode: 'any-bar-code',
-        imageUrl: 'any-image-',
+        imageUrl: 'any-image-url',
         price: 23.1
       }))
     }
@@ -38,7 +38,7 @@ function makeFakeProduct (): AddProductModel {
   return {
     name: 'any-name',
     barCode: 'any-bar-code',
-    imageUrl: 'any-image-',
+    imageUrl: 'any-image-url',
     price: 23.1
   }
 }
@@ -58,5 +58,18 @@ describe('DbAddProduct', () => {
     const product = makeFakeProduct()
     const result = await sut.add(product)
     expect(result).toBeNull()
+  })
+
+  it('should return an product when addProductRepository success', async () => {
+    const { sut } = makeSut()
+    const product = makeFakeProduct()
+    const result = await sut.add(product)
+    expect(result).toEqual({
+      id: 'any-id',
+      name: 'any-name',
+      barCode: 'any-bar-code',
+      imageUrl: 'any-image-url',
+      price: 23.1
+    })
   })
 })
