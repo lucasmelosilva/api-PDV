@@ -22,7 +22,7 @@ function makeAddProductStub (): AddProduct {
         id: 'any-id',
         name: 'any-name',
         barCode: 'any-bar-code',
-        imageUrl: 'any-image-',
+        imageUrl: 'any-image-url',
         price: 23.1
       }))
     }
@@ -95,7 +95,7 @@ describe('ProductCreate Controller', () => {
         id: 'any-id',
         name: 'any-name',
         barCode: 'any-bar-code',
-        imageUrl: 'any-image-',
+        imageUrl: 'any-image-url',
         price: 23.1
       }
     })
