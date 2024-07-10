@@ -6,7 +6,7 @@ export class DbAddProduct implements AddProduct {
   constructor (private readonly addProductRepository: AddProductRepository) {}
 
   async add (addProductModel: AddProductModel): Promise<ProductModel> {
-    await this.addProductRepository.addProduct(addProductModel)
-    return new Promise(resolve => resolve(null))
+    const product: ProductModel = await this.addProductRepository.addProduct(addProductModel)
+    return product
   }
 }
