@@ -1,0 +1,54 @@
+import { ProductModel } from '../../domain/models/product-model'
+import { AddProductModel } from '../../domain/usecase/add-product'
+import { AddProductRepository } from '../protocol/add-product-repository'
+
+import { DbAddProduct } from './db-add-product'
+
+function makeAddProductRepositoryStub (): AddProductRepository {
+  class AddProductRepositoryStub implements AddProductRepository {
+    async addProduct (product: AddProductModel): Promise<ProductModel> {
+      return await new Promise(resolve => resolve({
+        id: 'any-id',
+        name: 'any-name',
+        barCode: 'any-bar-code',
+        imageUrl: 'any-image-',
+        price: 23.1
+      }))
+    }
+  }
+  return new AddProductRepositoryStub()
+}
+
+interface SutTypes {
+  sut: DbAddProduct
+  addProductRepositoryStub: AddProductRepository
+}
+
+function makeSut (): SutTypes {
+  const addProductRepositoryStub = makeAddProductRepositoryStub()
+  const sut = new DbAddProduct(addProductRepositoryStub)
+
+  return {
+    sut,
+    addProductRepositoryStub
+  }
+}
+
+function makeFakeProduct (): AddProductModel {
+  return {
+    name: 'any-name',
+    barCode: 'any-bar-code',
+    imageUrl: 'any-image-',
+    price: 23.1
+  }
+}
+
+describe('DbAddProduct', () => {
+  it('should call AddProductRepository with correct value', async () => {
+    const { sut, addProductRepositoryStub } = makeSut()
+    const addProductSpy = jest.spyOn(addProductRepositoryStub, 'addProduct')
+    const product = makeFakeProduct()
+    await sut.add(product)
+    expect(addProductSpy).toHaveBeenCalledWith(product)
+  })
+})
