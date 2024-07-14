@@ -1,5 +1,5 @@
 export interface ProductModel {
-  id: string
+  id: number
   name: string
   barCode: string
   imageUrl: string
