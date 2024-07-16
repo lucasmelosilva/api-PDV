@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^4.3.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.9",
     "eslint-config-standard-with-typescript": "^43.0.1",
@@ -25,5 +26,8 @@
     "lint-staged": "^15.2.7",
     "ts-jest": "^29.1.5",
     "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "mongodb": "^6.8.0"
   }
 }
