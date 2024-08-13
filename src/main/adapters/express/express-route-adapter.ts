@@ -5,8 +5,9 @@ import { HttpResponse } from '../../../presentation/protocols/http-response-prot
 
 export const adapterRoute = (controller: Controller) => {
   return async (req: Request, res: Response) => {
+    const imageName = req.file.filename
     const httpRequest: HttpRequest = {
-      body: req.body
+      body: { imageUrl: imageName, ...req.body, price: Number(req.body.price) }
     }
     const httpResponse: HttpResponse = await controller.handle(httpRequest)
     if (httpResponse.status === 200) {
