@@ -39,4 +39,16 @@ describe('DbLoadProductByBarCode', () => {
     await sut.load('any-bar-code')
     expect(loadByBarCodeSpy).toHaveBeenCalledWith('any-bar-code')
   })
+
+  it('should return a product on success', async () => {
+    const { sut } = makeSut()
+    const product = await sut.load('any-bar-code')
+    expect(product).toEqual({
+      id: 'any-id',
+      name: 'any-name',
+      barCode: 'any-bar-code',
+      imageUrl: 'any-image-url',
+      price: 23.1
+    })
+  })
 })
