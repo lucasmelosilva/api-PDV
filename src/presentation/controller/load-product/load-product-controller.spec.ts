@@ -2,6 +2,7 @@ import { HttpRequest } from '../../protocols/http-request-protocol'
 import { LoadProduct } from '../../../domain/usecase/load-product'
 import { ProductModel } from '../../../domain/models/product-model'
 import { LoadProductController } from './load-product-controller'
+import { notFound } from '../../helper/http/not-found'
 
 function makeLoadProductStub (): LoadProduct {
   class LoadProductStub implements LoadProduct {
@@ -48,5 +49,12 @@ describe('LoadProductController', () => {
     const request = mockFakeRequest()
     await sut.handle(request)
     expect(loadSpy).toHaveBeenCalledWith(request.body.barCode)
+  })
+
+  it('should return 404 if LoadProduct not found', async () => {
+    const { sut, loadProductStub } = makeSut()
+    jest.spyOn(loadProductStub, 'load').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    const httpResponse = await sut.handle(mockFakeRequest())
+    expect(httpResponse).toEqual(notFound('any_bar_code'))
   })
 })
