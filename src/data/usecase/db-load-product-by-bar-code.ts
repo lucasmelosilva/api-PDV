@@ -6,7 +6,7 @@ export class DbLoadProductByBarCode implements LoadProduct {
   constructor (private readonly loadProductByBarCodeRepository: LoadProductByBarCodeRepository) {}
 
   async load (barCode: string): Promise<ProductModel> {
-    await this.loadProductByBarCodeRepository.loadByBarCode(barCode)
-    return new Promise(resolve => resolve(null))
+    const product = await this.loadProductByBarCodeRepository.loadByBarCode(barCode)
+    return product
   }
 }
