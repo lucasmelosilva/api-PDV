@@ -3,6 +3,7 @@ import { LoadProduct } from '../../../domain/usecase/load-product'
 import { ProductModel } from '../../../domain/models/product-model'
 import { LoadProductController } from './load-product-controller'
 import { notFound } from '../../helper/http/not-found'
+import { ok } from '../../helper/http/ok'
 
 function makeLoadProductStub (): LoadProduct {
   class LoadProductStub implements LoadProduct {
@@ -56,5 +57,17 @@ describe('LoadProductController', () => {
     jest.spyOn(loadProductStub, 'load').mockReturnValueOnce(new Promise(resolve => resolve(null)))
     const httpResponse = await sut.handle(mockFakeRequest())
     expect(httpResponse).toEqual(notFound('any_bar_code'))
+  })
+
+  it('should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockFakeRequest())
+    expect(httpResponse).toEqual(ok({
+      id: 'any_id',
+      name: 'any_name',
+      barCode: 'any_bar_code',
+      imageUrl: 'any_image_url',
+      price: 1.99
+    }))
   })
 })
