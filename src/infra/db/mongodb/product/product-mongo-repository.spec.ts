@@ -43,5 +43,29 @@ describe('ProductMongoRepository', () => {
       const result = await sut.loadByBarCode('7711889900')
       expect(result).toBeFalsy()
     })
+
+    it('should return a product on success', async () => {
+      await productCollection.insertMany([{
+        imageUrl: 'any_image_url',
+        name: 'any_name',
+        barCode: '7711889900',
+        price: 212.32
+      },
+      {
+        imageUrl: 'another_image_url',
+        name: 'another_name',
+        barCode: '7711889922',
+        price: 222.32
+      }])
+
+      const sut = new ProductMongoRepository()
+      const result = await sut.loadByBarCode('7711889900')
+      expect(result).toBeTruthy()
+      expect(result.id).toBeTruthy()
+      expect(result.name).toBe('any_name')
+      expect(result.barCode).toBe('7711889900')
+      expect(result.imageUrl).toBe('any_image_url')
+      expect(result.price).toBe(212.32)
+    })
   })
 })
