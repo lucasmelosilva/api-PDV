@@ -19,6 +19,7 @@ export const MongoHelper = {
   },
 
   map (product: any): ProductModel {
+    if (!product) return null
     const { _id, ...productWithoutId } = product
     return { id: _id.toString(), ...productWithoutId }
   },

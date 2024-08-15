@@ -6,7 +6,9 @@ import { MongoHelper } from '../../../helpers/mongo-helper'
 
 export class ProductMongoRepository implements AddProductRepository, LoadProductByBarCodeRepository {
   async loadByBarCode (barCode: string): Promise<ProductModel> {
-    return new Promise(resolve => resolve(null))
+    const productCollection = MongoHelper.getCollection('products')
+    const result = await productCollection.findOne({ barCode })
+    return MongoHelper.map(result)
   }
 
   async addProduct (product: AddProductModel): Promise<ProductModel> {
