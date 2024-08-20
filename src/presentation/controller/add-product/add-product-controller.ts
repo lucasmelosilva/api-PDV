@@ -2,6 +2,7 @@ import { ProductModel } from '../../../domain/models/product-model'
 import { AddProduct } from '../../../domain/usecase/add-product'
 import { badRequest } from '../../helper/http/bad-request'
 import { ok } from '../../helper/http/ok'
+import { serverError } from '../../helper/http/server-error'
 import { Controller } from '../../protocols/controller-protocol'
 import { HttpRequest } from '../../protocols/http-request-protocol'
 import { HttpResponse } from '../../protocols/http-response-protocol'
@@ -14,11 +15,15 @@ export class AddProductController implements Controller {
   ) {}
 
   async handle (request: HttpRequest): Promise<HttpResponse> {
-    const error = this.validation.validate(request.body)
-    if (error) return badRequest(error)
-    const product: ProductModel = request.body
+    try {
+      const error = this.validation.validate(request.body)
+      if (error) return badRequest(error)
+      const product: ProductModel = request.body
 
-    const addedProduct = await this.addProduct.add(product)
-    return ok(addedProduct)
+      const addedProduct = await this.addProduct.add(product)
+      return ok(addedProduct)
+    } catch (error) {
+      return serverError(error as Error)
+    }
   }
 }
