@@ -4,6 +4,8 @@ import { Validation } from '../../protocols/validation-protocol'
 
 import { AddProductController } from './add-product-controller'
 import { ProductModel } from '../../../domain/models/product-model'
+import { serverError } from '../../helper/http/server-error'
+import { ServerError } from '../../errors/server-error'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -99,5 +101,14 @@ describe('ProductCreate Controller', () => {
         price: 23.1
       }
     })
+  })
+
+  it('should return 500 if any AddProduct throws', async () => {
+    const { sut, addProductStub } = makeSut()
+    jest.spyOn(addProductStub, 'add').mockImplementationOnce(() => {
+      throw new ServerError('any-stack')
+    })
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response).toEqual(serverError(new ServerError('any-stack')))
   })
 })
