@@ -51,4 +51,11 @@ describe('DbLoadProductByBarCode', () => {
       price: 23.1
     })
   })
+
+  it('should throw if LoadProductByBarCodeRepository throws', async () => {
+    const { sut, loadProductByBarCodeRepositoryStub } = makeSut()
+    jest.spyOn(loadProductByBarCodeRepositoryStub, 'loadByBarCode').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.load('any-bar-code')
+    await expect(promise).rejects.toThrow()
+  })
 })
