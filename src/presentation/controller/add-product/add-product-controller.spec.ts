@@ -2,7 +2,7 @@ import { HttpRequest } from '../../protocols/http-request-protocol'
 import { AddProduct, AddProductModel } from '../../../domain/usecase/add-product'
 import { Validation } from '../../protocols/validation-protocol'
 
-import { ProductCreateController } from './product-create-controller'
+import { AddProductController } from './add-product-controller'
 import { ProductModel } from '../../../domain/models/product-model'
 
 function makeValidationStub (): Validation {
@@ -43,7 +43,7 @@ function makeFakeHttpRequest (): HttpRequest {
 }
 
 interface SutTypes {
-  sut: ProductCreateController
+  sut: AddProductController
   validationStub: Validation
   addProductStub: AddProduct
 }
@@ -51,7 +51,7 @@ interface SutTypes {
 function makeSut (): SutTypes {
   const validationStub = makeValidationStub()
   const addProductStub = makeAddProductStub()
-  const sut = new ProductCreateController(validationStub, addProductStub)
+  const sut = new AddProductController(validationStub, addProductStub)
   return {
     sut,
     validationStub,

@@ -7,7 +7,7 @@ import { HttpRequest } from '../../protocols/http-request-protocol'
 import { HttpResponse } from '../../protocols/http-response-protocol'
 import { Validation } from '../../protocols/validation-protocol'
 
-export class ProductCreateController implements Controller {
+export class AddProductController implements Controller {
   constructor (
     private readonly validation: Validation,
     private readonly addProduct: AddProduct

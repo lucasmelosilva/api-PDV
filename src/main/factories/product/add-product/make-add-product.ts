@@ -1,11 +1,11 @@
-import { ProductCreateController } from '../../../../presentation/controller/product-create/product-create-controller'
+import { AddProductController } from '../../../../presentation/controller/add-product/add-product-controller'
 import { Controller } from '../../../../presentation/protocols/controller-protocol'
 import { makeDbAddProduct } from '../../db/db-add-product/make-db-add-product'
 import { makeValidation } from '../../validation/make-validation'
 
-export const makeProductCreate = (): Controller => {
+export const makeAddProduct = (): Controller => {
   const fields = ['name', 'barCode', 'imageUrl', 'price']
   const validationComposite = makeValidation(fields)
   const dbAddProduct = makeDbAddProduct()
-  return new ProductCreateController(validationComposite, dbAddProduct)
+  return new AddProductController(validationComposite, dbAddProduct)
 }
