@@ -72,4 +72,14 @@ describe('DbAddProduct', () => {
       price: 23.1
     })
   })
+
+  it('should throw if AddProductRepository throws', async () => {
+    const { sut, addProductRepositoryStub } = makeSut()
+    jest.spyOn(addProductRepositoryStub, 'addProduct').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const product = makeFakeProduct()
+    const promise = sut.add(product)
+    await expect(promise).rejects.toThrow()
+  })
 })
