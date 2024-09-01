@@ -1,16 +1,17 @@
 # API PDV
 It is a just simple project of the POS api.
 
-## Installation and Run
+## Getting started
 
-### Installation
+### Install
 ```bash 
 git clone https://github.com/lucasmelosilva/api-PDV
+
+cd ./api-PDV
 ```
-
-### Run
-
+### NPM
 ```bash
+npm install
 npm run dev
 ```
 ## API
