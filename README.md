@@ -5,14 +5,13 @@ It is a just simple project of the POS api.
 
 ### Install
 ```bash 
-git clone https://github.com/lucasmelosilva/api-PDV
-
-cd ./api-PDV
+$ git clone https://github.com/lucasmelosilva/api-PDV
+$ cd ./api-PDV
 ```
 ### NPM
 ```bash
-npm install
-npm run dev
+$ npm install
+$ npm run dev
 ```
 ## API
 
