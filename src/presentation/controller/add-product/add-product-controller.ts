@@ -16,7 +16,8 @@ export class AddProductController implements Controller {
 
   async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(request.body)
+      const { body, file } = request
+      const error = this.validation.validate({ ...body, imageUrl: file.filename })
       if (error) return badRequest(error)
       const product: ProductModel = request.body
 
