@@ -11,10 +11,10 @@ export class LoadProductController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { barCode } = httpRequest.body
-      const product = await this.loadProduct.load(barCode as string)
+      const { barcode } = httpRequest.params
+      const product = await this.loadProduct.load(barcode as string)
       if (!product) {
-        return notFound(barCode as string)
+        return notFound(barcode as string)
       }
       return ok(product)
     } catch (error) {

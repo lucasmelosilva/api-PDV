@@ -6,5 +6,5 @@ import { makeLoadProduct } from '../factories/product/load-product/make-load-pro
 
 export default (router: Router): void => {
   router.post('/products', uploadMiddleware.single('image'), adapterRoute(makeAddProduct()))
-  router.post('/products/load', adapterRoute(makeLoadProduct()))
+  router.get('/products/:barcode', adapterRoute(makeLoadProduct()))
 }
