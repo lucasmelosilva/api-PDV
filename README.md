@@ -19,8 +19,8 @@ $ npm run dev
 
 * `POST` : Add new Product
 
-### /api/products/load
-* `POST` : Load a product by bar code
+### /api/products/:barcode
+* `GET` : Load a product by bar code
 
 ## TODO
 
