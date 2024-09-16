@@ -68,4 +68,19 @@ describe('ProductMongoRepository', () => {
       expect(result.price).toBe(212.32)
     })
   })
+
+  describe('deleteProduct', () => {
+    it('should delete a product', async () => {
+      const { insertedId } = await productCollection.insertOne({
+        imageUrl: 'any_image_url',
+        name: 'any_name',
+        barCode: '7711889900',
+        price: 212.32
+      })
+      const sut = new ProductMongoRepository()
+      await sut.delete('7711889900')
+      const result = await productCollection.findOne({ _id: insertedId })
+      expect(result).toBeFalsy()
+    })
+  })
 })
