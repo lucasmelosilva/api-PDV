@@ -1,4 +1,4 @@
-import { DbDeleteProduct } from '../../../../data/usecase/db-delete-product'
+import { DbDeleteProduct } from '../../../../data/usecase/delete-product/db-delete-product'
 import { DeleteProduct } from '../../../../domain/usecase/delete-product'
 import { ProductMongoRepository } from '../../../../infra/db/mongodb/product/product-mongo-repository'
 
