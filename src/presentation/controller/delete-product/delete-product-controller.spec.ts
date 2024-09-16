@@ -2,6 +2,7 @@ import { HttpRequest } from '../../protocols/http-request-protocol'
 import { DeleteProduct } from '../../../domain/usecase/delete-product'
 
 import { serverError } from '../../helper/http/server-error'
+import { ok } from '../../helper/http/ok'
 
 import { DeleteProductController } from './delete-product-controller'
 
@@ -54,5 +55,11 @@ describe('DeleteProduct Controller', () => {
     })
     const response = await sut.handle(makeFakeRequest())
     expect(response).toEqual(serverError(new Error()))
+  })
+
+  it('should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const response = await sut.handle(makeFakeRequest())
+    expect(response).toEqual(ok('tudo certo'))
   })
 })
