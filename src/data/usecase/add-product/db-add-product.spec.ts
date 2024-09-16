@@ -1,6 +1,6 @@
-import { ProductModel } from '../../domain/models/product-model'
-import { AddProductModel } from '../../domain/usecase/add-product'
-import { AddProductRepository } from '../protocol/add-product-repository'
+import { ProductModel } from '../../../domain/models/product-model'
+import { AddProductModel } from '../../../domain/usecase/add-product'
+import { AddProductRepository } from '../../protocol/add-product-repository'
 
 import { DbAddProduct } from './db-add-product'
 

@@ -1,4 +1,4 @@
-import { DeleteProductRepository } from '../protocol/delete-product-repository'
+import { DeleteProductRepository } from '../../protocol/delete-product-repository'
 import { DbDeleteProduct } from './db-delete-product'
 
 function makeDeleteProductRepositoryStub (): DeleteProductRepository {

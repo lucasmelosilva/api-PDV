@@ -1,6 +1,6 @@
-import { ProductModel } from '../../domain/models/product-model'
-import { LoadProduct } from '../../domain/usecase/load-product'
-import { LoadProductByBarCodeRepository } from '../protocol/load-product-by-bar-code-repository'
+import { ProductModel } from '../../../domain/models/product-model'
+import { LoadProduct } from '../../../domain/usecase/load-product'
+import { LoadProductByBarCodeRepository } from '../../protocol/load-product-by-bar-code-repository'
 
 export class DbLoadProductByBarCode implements LoadProduct {
   constructor (private readonly loadProductByBarCodeRepository: LoadProductByBarCodeRepository) {}

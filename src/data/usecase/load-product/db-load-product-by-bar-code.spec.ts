@@ -1,5 +1,5 @@
-import { ProductModel } from '../../domain/models/product-model'
-import { LoadProductByBarCodeRepository } from '../protocol/load-product-by-bar-code-repository'
+import { ProductModel } from '../../../domain/models/product-model'
+import { LoadProductByBarCodeRepository } from '../../protocol/load-product-by-bar-code-repository'
 import { DbLoadProductByBarCode } from './db-load-product-by-bar-code'
 
 function makeLoadProductByBarCodeRepositoryStub (): LoadProductByBarCodeRepository {
