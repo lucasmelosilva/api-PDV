@@ -22,9 +22,12 @@ $ npm run dev
 ### /api/products/:barcode
 * `GET` : Load a product by bar code
 
+### /api/products/:barcode
+* `DELETE` : Delete a product 
+
 ## TODO
 
 - [x]  Add a new product.
 - [x]  Load a product by bar code.
 - [ ]  Update a Product.
-- [ ]  Delete a Product.
+- [x]  Delete a Product.
