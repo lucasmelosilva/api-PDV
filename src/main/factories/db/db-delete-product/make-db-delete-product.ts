@@ -1,8 +1,7 @@
 import { DbDeleteProduct } from '../../../../data/usecase/delete-product/db-delete-product'
 import { DeleteProduct } from '../../../../domain/usecase/delete-product'
-import { ProductMongoRepository } from '../../../../infra/db/mongodb/product/product-mongo-repository'
+import { makeProductMongoRepository } from '../../infra/make-product-mongo-repository'
 
-export const makeDbDeleteProduct = (): DeleteProduct => {
-  const productMongoRepository = new ProductMongoRepository()
-  return new DbDeleteProduct(productMongoRepository)
-}
+export const makeDbDeleteProduct = (): DeleteProduct => (
+  new DbDeleteProduct(makeProductMongoRepository())
+)
