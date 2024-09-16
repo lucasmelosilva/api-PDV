@@ -38,8 +38,10 @@ function makeFakeHttpRequest (): HttpRequest {
     body: {
       name: 'any_name',
       barCode: 'any_bar_code',
-      imageUrl: 'any_image_url',
       price: 12.30
+    },
+    file: {
+      filename: 'any_file'
     }
   }
 }
@@ -67,7 +69,7 @@ describe('ProductCreate Controller', () => {
     const validateSpy = jest.spyOn(validationStub, 'validate')
     const request = makeFakeHttpRequest()
     await sut.handle(request)
-    expect(validateSpy).toHaveBeenCalledWith(request.body)
+    expect(validateSpy).toHaveBeenCalledWith({ ...request.body, imageUrl: 'any_file' })
   })
 
   it('should return 400 if Validation fails', async () => {

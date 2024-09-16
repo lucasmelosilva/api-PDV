@@ -39,8 +39,9 @@ function makeSut (): SutTypes {
 
 function mockFakeRequest (): HttpRequest {
   return {
-    body: {
-      barCode: 'any_bar_code'
+    body: {},
+    params: {
+      barcode: 'any_bar_code'
     }
   }
 }
@@ -51,7 +52,7 @@ describe('LoadProductController', () => {
     const loadSpy = jest.spyOn(loadProductStub, 'load')
     const request = mockFakeRequest()
     await sut.handle(request)
-    expect(loadSpy).toHaveBeenCalledWith(request.body.barCode)
+    expect(loadSpy).toHaveBeenCalledWith(request.params.barcode)
   })
 
   it('should return 404 if LoadProduct not found', async () => {
