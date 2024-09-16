@@ -1,6 +1,8 @@
 import { HttpRequest } from '../../protocols/http-request-protocol'
 import { DeleteProduct } from '../../../domain/usecase/delete-product'
 
+import { serverError } from '../../helper/http/server-error'
+
 import { DeleteProductController } from './delete-product-controller'
 
 function makeFakeRequest (): HttpRequest {
@@ -43,5 +45,14 @@ describe('DeleteProduct Controller', () => {
     const deleteSpy = jest.spyOn(deleteProductStub, 'delete')
     await sut.handle(makeFakeRequest())
     expect(deleteSpy).toHaveBeenCalledWith('any_bar_code')
+  })
+
+  it('should return 500 if DeleteProduct throws', async () => {
+    const { sut, deleteProductStub } = makeSut()
+    jest.spyOn(deleteProductStub, 'delete').mockImplementationOnce(async () => {
+      throw new Error()
+    })
+    const response = await sut.handle(makeFakeRequest())
+    expect(response).toEqual(serverError(new Error()))
   })
 })
