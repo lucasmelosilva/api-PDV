@@ -1,4 +1,5 @@
 import { DeleteProduct } from '../../../domain/usecase/delete-product'
+import { ok } from '../../helper/http/ok'
 import { serverError } from '../../helper/http/server-error'
 import { Controller } from '../../protocols/controller-protocol'
 import { HttpRequest } from '../../protocols/http-request-protocol'
@@ -12,7 +13,7 @@ export class DeleteProductController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       await this.deleteProduct.delete(httpRequest.params.barcode as string)
-      return new Promise(resolve => resolve(null))
+      return ok('tudo certo')
     } catch (error) {
       return serverError(error as Error)
     }
