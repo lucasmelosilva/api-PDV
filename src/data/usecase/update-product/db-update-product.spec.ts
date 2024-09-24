@@ -49,4 +49,11 @@ describe('DbUpdateProduct', () => {
     await sut.update(id, product)
     expect(updateSpy).toHaveBeenCalledWith(id, product)
   })
+
+  it('should throw if UpdateProductRepository throws', async () => {
+    const { sut, updateProductRepositoryStub } = makeSut()
+    jest.spyOn(updateProductRepositoryStub, 'update').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.update('any_id', makeFakeProduct())
+    await expect(promise).rejects.toThrow()
+  })
 })
