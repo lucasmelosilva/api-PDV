@@ -18,7 +18,10 @@ function makeUpdateProductRepositoryStub (): UpdateProductRepository {
     async update (id: string, updateProductModel: UpdateProductModel): Promise<ProductModel> {
       return new Promise(resolve => resolve({
         id: 'any-id',
-        ...makeFakeProduct()
+        name: 'updated-name',
+        barCode: 'updated-bar-code',
+        imageUrl: 'updated-image-url',
+        price: 23.1
       }))
     }
   }
@@ -55,5 +58,17 @@ describe('DbUpdateProduct', () => {
     jest.spyOn(updateProductRepositoryStub, 'update').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.update('any_id', makeFakeProduct())
     await expect(promise).rejects.toThrow()
+  })
+
+  it('should return an updated product on success', async () => {
+    const { sut } = makeSut()
+    const updatedProduct = await sut.update('any-id', makeFakeProduct())
+    expect(updatedProduct).toEqual({
+      id: 'any-id',
+      name: 'updated-name',
+      barCode: 'updated-bar-code',
+      imageUrl: 'updated-image-url',
+      price: 23.1
+    })
   })
 })
