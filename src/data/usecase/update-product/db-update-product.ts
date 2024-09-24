@@ -8,7 +8,7 @@ export class DbUpdateProduct implements UpdateProduct {
   ) {}
 
   async update (id: string, updateProductModel: UpdateProductModel): Promise<ProductModel> {
-    await this.updateProductRepository.update(id, updateProductModel)
-    return null
+    const updatedProduct = await this.updateProductRepository.update(id, updateProductModel)
+    return updatedProduct
   }
 }
