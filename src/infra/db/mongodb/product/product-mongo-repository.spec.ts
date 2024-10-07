@@ -83,4 +83,30 @@ describe('ProductMongoRepository', () => {
       expect(result).toBeFalsy()
     })
   })
+
+  describe('update()', () => {
+    it('should update a product on success', async () => {
+      const { insertedId } = await productCollection.insertOne({
+        name: 'any_name',
+        barCode: 'any_bar_code',
+        imageUrl: 'any_image_url',
+        price: 12.34
+      })
+
+      const productBeforeUpdated = await productCollection.findOne({ _id: insertedId })
+      expect(productBeforeUpdated).toBeTruthy()
+      expect(productBeforeUpdated?.price).toEqual(12.34)
+
+      const sut = new ProductMongoRepository()
+      const productAfterUpdated = await sut.update(insertedId.toString(), {
+        name: 'any_name',
+        barCode: 'any_bar_code',
+        imageUrl: 'any_image_url',
+        price: 11.25
+      })
+
+      expect(productAfterUpdated).toBeTruthy()
+      expect(productAfterUpdated?.price).toEqual(11.25)
+    })
+  })
 })
