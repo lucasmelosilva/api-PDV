@@ -10,5 +10,5 @@ export default (router: Router): void => {
   router.post('/products', uploadMiddleware.single('image'), adapterRoute(makeAddProduct()))
   router.get('/products/:barcode', adapterRoute(makeLoadProduct()))
   router.delete('/products/:barcode', adapterRoute(makeDeleteProduct()))
-  router.put('/products/:id', adapterRoute(makeUpdateProduct()))
+  router.put('/products', adapterRoute(makeUpdateProduct()))
 }
