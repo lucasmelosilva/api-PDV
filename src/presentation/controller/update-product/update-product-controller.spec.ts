@@ -5,6 +5,7 @@ import { Validation } from '../../protocols/validation-protocol'
 import { UpdateProductController } from './update-product-controller'
 import { UpdateProduct, UpdateProductModel } from '../../../domain/usecase/update-product'
 import { ProductModel } from '../../../domain/models/product-model'
+import { ok } from '../../helper/http/ok'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -85,5 +86,17 @@ describe('UpdateProductController', () => {
     await sut.handle(request)
     const { id, ...product } = request.body
     expect(updateSpy).toHaveBeenCalledWith(id, product)
+  })
+
+  it('should return updated product on success', async () => {
+    const { sut } = makeSut()
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response).toEqual(ok({
+      id: 'any_id',
+      name: 'updated_name',
+      barCode: 'any_bar_code',
+      imageUrl: 'any_image_url',
+      price: 1.99
+    }))
   })
 })
