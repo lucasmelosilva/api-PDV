@@ -36,7 +36,6 @@ export class ProductMongoRepository implements AddProductRepository, LoadProduct
     }, {
       returnDocument: 'after'
     })
-    console.log(result)
     return MongoHelper.map(result)
   }
 }
