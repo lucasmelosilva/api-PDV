@@ -1,5 +1,6 @@
 import { UpdateProduct } from '../../../domain/usecase/update-product'
 import { badRequest } from '../../helper/http/bad-request'
+import { ok } from '../../helper/http/ok'
 import { Controller } from '../../protocols/controller-protocol'
 import { HttpRequest } from '../../protocols/http-request-protocol'
 import { HttpResponse } from '../../protocols/http-response-protocol'
@@ -17,9 +18,7 @@ export class UpdateProductController implements Controller {
     if (error) return badRequest(error)
 
     const { id, ...product } = body
-
-    await this.updateProduct.update(id, product)
-
-    return null
+    const result = await this.updateProduct.update(id, product)
+    return ok(result)
   }
 }
