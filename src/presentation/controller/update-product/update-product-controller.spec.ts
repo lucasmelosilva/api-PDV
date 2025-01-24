@@ -1,3 +1,4 @@
+import { badRequest } from '../../helper/http/bad-request'
 import { HttpRequest } from '../../protocols/http-request-protocol'
 import { Validation } from '../../protocols/validation-protocol'
 
@@ -46,5 +47,13 @@ describe('UpdateProductController', () => {
     const request = makeFakeHttpRequest()
     await sut.handle(request)
     expect(validateSpy).toHaveBeenCalledWith(request.body)
+  })
+
+  it('should return 400 if Validation fails', async () => {
+    const { sut, validationStub } = makeSut()
+    const err = new Error('any_error')
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(err)
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response).toEqual(badRequest(err))
   })
 })
