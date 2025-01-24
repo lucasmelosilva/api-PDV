@@ -19,8 +19,7 @@ export class AddProductController implements Controller {
       const { body, file } = request
       const error = this.validation.validate({ ...body, imageUrl: file.filename })
       if (error) return badRequest(error)
-      const product: ProductModel = request.body
-
+      const product: ProductModel = { ...request.body, imageUrl: request.file.filename }
       const addedProduct = await this.addProduct.add(product)
       return ok(addedProduct)
     } catch (error) {

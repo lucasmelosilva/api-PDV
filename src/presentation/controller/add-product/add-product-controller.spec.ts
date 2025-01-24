@@ -87,7 +87,8 @@ describe('ProductCreate Controller', () => {
     const addSpy = jest.spyOn(addProductStub, 'add')
     const request = makeFakeHttpRequest()
     await sut.handle(request)
-    expect(addSpy).toHaveBeenCalledWith(request.body)
+    const productToAdd = { ...request.body, imageUrl: 'any_file' }
+    expect(addSpy).toHaveBeenCalledWith(productToAdd)
   })
 
   it('should return 200 when AddProduct success', async () => {
