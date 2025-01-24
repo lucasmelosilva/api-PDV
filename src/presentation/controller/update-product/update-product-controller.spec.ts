@@ -3,6 +3,8 @@ import { HttpRequest } from '../../protocols/http-request-protocol'
 import { Validation } from '../../protocols/validation-protocol'
 
 import { UpdateProductController } from './update-product-controller'
+import { UpdateProduct, UpdateProductModel } from '../../../domain/usecase/update-product'
+import { ProductModel } from '../../../domain/models/product-model'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -14,17 +16,36 @@ function makeValidationStub (): Validation {
   return new ValidationStub()
 }
 
+function makeUpdateProductStub (): UpdateProduct {
+  class UpdateProductStub implements UpdateProduct {
+    async update (id: string, updateProductModel: UpdateProductModel): Promise<ProductModel> {
+      return new Promise(resolve => resolve({
+        id: 'any_id',
+        name: 'updated_name',
+        barCode: 'any_bar_code',
+        imageUrl: 'any_image_url',
+        price: 1.99
+      }))
+    }
+  }
+
+  return new UpdateProductStub()
+}
+
 interface SutTypes {
   sut: UpdateProductController
   validationStub: Validation
+  updateProductStub: UpdateProduct
 }
 
 function makeSut (): SutTypes {
   const validationStub = makeValidationStub()
-  const sut = new UpdateProductController(validationStub)
+  const updateProductStub = makeUpdateProductStub()
+  const sut = new UpdateProductController(validationStub, updateProductStub)
   return {
     sut,
-    validationStub
+    validationStub,
+    updateProductStub
   }
 }
 
@@ -55,5 +76,14 @@ describe('UpdateProductController', () => {
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(err)
     const response = await sut.handle(makeFakeHttpRequest())
     expect(response).toEqual(badRequest(err))
+  })
+
+  it('should call UpdateProduct with correct values', async () => {
+    const { sut, updateProductStub } = makeSut()
+    const updateSpy = jest.spyOn(updateProductStub, 'update')
+    const request = makeFakeHttpRequest()
+    await sut.handle(request)
+    const { id, ...product } = request.body
+    expect(updateSpy).toHaveBeenCalledWith(id, product)
   })
 })
