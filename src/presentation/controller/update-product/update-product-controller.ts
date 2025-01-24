@@ -1,3 +1,4 @@
+import { badRequest } from '../../helper/http/bad-request'
 import { Controller } from '../../protocols/controller-protocol'
 import { HttpRequest } from '../../protocols/http-request-protocol'
 import { HttpResponse } from '../../protocols/http-response-protocol'
@@ -8,7 +9,9 @@ export class UpdateProductController implements Controller {
 
   async handle (request: HttpRequest): Promise<HttpResponse> {
     const { body } = request
-    this.validation.validate({ ...body })
+    const error = this.validation.validate({ ...body })
+    if (error) return badRequest(error)
+
     return new Promise(resolve => resolve(null))
   }
 }
