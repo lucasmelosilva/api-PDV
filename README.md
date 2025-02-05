@@ -29,5 +29,5 @@ $ npm run dev
 
 - [x]  Add a new product.
 - [x]  Load a product by bar code.
-- [ ]  Update a Product.
+- [x]  Update a Product.
 - [x]  Delete a Product.
