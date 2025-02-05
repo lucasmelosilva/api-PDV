@@ -1,5 +1,5 @@
 import { HttpRequest } from '../../protocols/http-request-protocol'
-import { LoadProduct } from '../../../domain/usecase/load-product'
+import { LoadProduct } from '../../../domain/usecase/product/load-product'
 import { ProductModel } from '../../../domain/models/product-model'
 import { LoadProductController } from './load-product-controller'
 import { notFound } from '../../helper/http/not-found'

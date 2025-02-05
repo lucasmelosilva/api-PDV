@@ -3,7 +3,7 @@ import { HttpRequest } from '../../protocols/http-request-protocol'
 import { Validation } from '../../protocols/validation-protocol'
 
 import { UpdateProductController } from './update-product-controller'
-import { UpdateProduct, UpdateProductModel } from '../../../domain/usecase/update-product'
+import { UpdateProduct, UpdateProductModel } from '../../../domain/usecase/product/update-product'
 import { ProductModel } from '../../../domain/models/product-model'
 import { ok } from '../../helper/http/ok'
 

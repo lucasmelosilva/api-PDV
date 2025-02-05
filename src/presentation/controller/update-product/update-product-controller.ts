@@ -1,4 +1,4 @@
-import { UpdateProduct } from '../../../domain/usecase/update-product'
+import { UpdateProduct } from '../../../domain/usecase/product/update-product'
 import { badRequest } from '../../helper/http/bad-request'
 import { ok } from '../../helper/http/ok'
 import { Controller } from '../../protocols/controller-protocol'

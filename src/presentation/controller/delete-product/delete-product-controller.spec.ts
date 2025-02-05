@@ -1,5 +1,5 @@
 import { HttpRequest } from '../../protocols/http-request-protocol'
-import { DeleteProduct } from '../../../domain/usecase/delete-product'
+import { DeleteProduct } from '../../../domain/usecase/product/delete-product'
 
 import { serverError } from '../../helper/http/server-error'
 import { ok } from '../../helper/http/ok'

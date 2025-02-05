@@ -1,5 +1,5 @@
 import { ProductModel } from '../../../domain/models/product-model'
-import { AddProduct } from '../../../domain/usecase/add-product'
+import { AddProduct } from '../../../domain/usecase/product/add-product'
 import { badRequest } from '../../helper/http/bad-request'
 import { ok } from '../../helper/http/ok'
 import { serverError } from '../../helper/http/server-error'

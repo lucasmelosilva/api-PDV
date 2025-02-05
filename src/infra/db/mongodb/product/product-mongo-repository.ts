@@ -1,11 +1,11 @@
 import { ObjectId } from 'mongodb'
-import { AddProductRepository } from '../../../../data/protocol/add-product-repository'
-import { DeleteProductRepository } from '../../../../data/protocol/delete-product-repository'
-import { LoadProductByBarCodeRepository } from '../../../../data/protocol/load-product-by-bar-code-repository'
-import { UpdateProductRepository } from '../../../../data/protocol/update-product-repository'
+import { AddProductRepository } from '../../../../data/protocol/product/add-product-repository'
+import { DeleteProductRepository } from '../../../../data/protocol/product/delete-product-repository'
+import { LoadProductByBarCodeRepository } from '../../../../data/protocol/product/load-product-by-bar-code-repository'
+import { UpdateProductRepository } from '../../../../data/protocol/product/update-product-repository'
 import { ProductModel } from '../../../../domain/models/product-model'
-import { AddProductModel } from '../../../../domain/usecase/add-product'
-import { UpdateProductModel } from '../../../../domain/usecase/update-product'
+import { AddProductModel } from '../../../../domain/usecase/product/add-product'
+import { UpdateProductModel } from '../../../../domain/usecase/product/update-product'
 import { MongoHelper } from '../../../helpers/mongo-helper'
 
 export class ProductMongoRepository implements AddProductRepository, LoadProductByBarCodeRepository, DeleteProductRepository, UpdateProductRepository {

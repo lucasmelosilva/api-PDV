@@ -1,5 +1,5 @@
 import { HttpRequest } from '../../protocols/http-request-protocol'
-import { AddProduct, AddProductModel } from '../../../domain/usecase/add-product'
+import { AddProduct, AddProductModel } from '../../../domain/usecase/product/add-product'
 import { Validation } from '../../protocols/validation-protocol'
 
 import { AddProductController } from './add-product-controller'
