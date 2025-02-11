@@ -49,4 +49,13 @@ describe('DbAddEmployer', () => {
     await sut.add(fakeEmployer)
     expect(addEmployerSpy).toHaveBeenCalledWith(fakeEmployer)
   })
+
+  it('should return null if AddEmployerRepository returns null', async () => {
+    const { sut, addEmployerRepositoryStub } = makeSut()
+    jest.spyOn(addEmployerRepositoryStub, 'addEmployer').mockReturnValueOnce(
+      new Promise(resolve => resolve(null as unknown as EmployerModel))
+    )
+    const result = await sut.add(makeFakeEmployer())
+    expect(result).toBeNull()
+  })
 })
