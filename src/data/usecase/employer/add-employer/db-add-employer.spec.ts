@@ -69,4 +69,13 @@ describe('DbAddEmployer', () => {
       employerId: 'any_employer_id'
     })
   })
+
+  it('should throw if AddEmployerRepository throws', async () => {
+    const { sut, addEmployerRepositoryStub } = makeSut()
+    jest.spyOn(addEmployerRepositoryStub, 'addEmployer').mockReturnValueOnce(
+      new Promise((resolve, reject) => reject(new Error()))
+    )
+    const promise = sut.add(makeFakeEmployer())
+    await expect(promise).rejects.toThrow()
+  })
 })
