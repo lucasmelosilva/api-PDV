@@ -58,4 +58,15 @@ describe('DbAddEmployer', () => {
     const result = await sut.add(makeFakeEmployer())
     expect(result).toBeNull()
   })
+
+  it('should return an employer when AddEmployerRepository success', async () => {
+    const { sut } = makeSut()
+    const result = await sut.add(makeFakeEmployer())
+    expect(result).toEqual({
+      id: 'any_id',
+      name: 'any_name',
+      password: 'any_password',
+      employerId: 'any_employer_id'
+    })
+  })
 })
