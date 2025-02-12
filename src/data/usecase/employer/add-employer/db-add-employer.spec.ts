@@ -2,6 +2,7 @@ import { EmployerModel } from '../../../../domain/models/employer-model'
 import { AddEmployerModel } from '../../../../domain/usecase/employer/add-employer'
 import { AddEmployerRepository } from '../../../protocol/employer/add-employer-repository'
 import { DbAddEmployer } from './db-add-employer'
+import { Hasher } from '../../../protocol/cryptography/hasher'
 
 function makeAddEmployerRepositoryStub (): AddEmployerRepository {
   class AddEmployerRepositoryStub implements AddEmployerRepository {
@@ -9,13 +10,22 @@ function makeAddEmployerRepositoryStub (): AddEmployerRepository {
       return new Promise(resolve => resolve({
         id: 'any_id',
         name: 'any_name',
-        password: 'any_password',
+        password: 'hashed_password',
         employerId: 'any_employer_id'
       }))
     }
   }
 
   return new AddEmployerRepositoryStub()
+}
+
+function makeHasherStub (): Hasher {
+  class HasherStub implements Hasher {
+    async hash (plaintext: string): Promise<string> {
+      return new Promise(resolve => resolve('hashed_password'))
+    }
+  }
+  return new HasherStub()
 }
 
 function makeFakeEmployer (): AddEmployerModel {
@@ -28,26 +38,37 @@ function makeFakeEmployer (): AddEmployerModel {
 
 interface SutTypes {
   addEmployerRepositoryStub: AddEmployerRepository
+  hasherStub: Hasher
   sut: DbAddEmployer
 }
 
 function makeSut (): SutTypes {
   const addEmployerRepositoryStub = makeAddEmployerRepositoryStub()
-  const sut = new DbAddEmployer(addEmployerRepositoryStub)
+  const hasherStub = makeHasherStub()
+  const sut = new DbAddEmployer(hasherStub, addEmployerRepositoryStub)
 
   return {
     addEmployerRepositoryStub,
+    hasherStub,
     sut
   }
 }
 
 describe('DbAddEmployer', () => {
+  it('should call Hasher with correct value', async () => {
+    const { sut, hasherStub } = makeSut()
+    const hashSpy = jest.spyOn(hasherStub, 'hash')
+    const fakeEmployer = makeFakeEmployer()
+    await sut.add(fakeEmployer)
+    expect(hashSpy).toHaveBeenCalledWith(fakeEmployer.password)
+  })
+
   it('should call AddEmployerRepository with correct values', async () => {
     const { sut, addEmployerRepositoryStub } = makeSut()
     const addEmployerSpy = jest.spyOn(addEmployerRepositoryStub, 'addEmployer')
     const fakeEmployer = makeFakeEmployer()
     await sut.add(fakeEmployer)
-    expect(addEmployerSpy).toHaveBeenCalledWith(fakeEmployer)
+    expect(addEmployerSpy).toHaveBeenCalledWith({ ...fakeEmployer, password: 'hashed_password' })
   })
 
   it('should return null if AddEmployerRepository returns null', async () => {
@@ -65,7 +86,7 @@ describe('DbAddEmployer', () => {
     expect(result).toEqual({
       id: 'any_id',
       name: 'any_name',
-      password: 'any_password',
+      password: 'hashed_password',
       employerId: 'any_employer_id'
     })
   })
