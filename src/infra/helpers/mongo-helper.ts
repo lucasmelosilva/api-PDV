@@ -1,5 +1,4 @@
 import { Collection, MongoClient } from 'mongodb'
-import { ProductModel } from '../../domain/models/product-model'
 
 export const MongoHelper = {
   client: null as MongoClient,
@@ -18,7 +17,7 @@ export const MongoHelper = {
     return collection.findOne({ _id: insertedId })
   },
 
-  map (product: any): ProductModel {
+  map (product: any): any {
     if (!product) return null
     const { _id, ...productWithoutId } = product
     return { id: _id.toString(), ...productWithoutId }
