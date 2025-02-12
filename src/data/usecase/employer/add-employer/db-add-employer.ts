@@ -8,7 +8,7 @@ export class DbAddEmployer implements AddEmployer {
   ) {}
 
   async add (addEmployerModel: AddEmployerModel): Promise<EmployerModel> {
-    await this.addEmployerRepository.addEmployer(addEmployerModel)
-    return new Promise(resolve => resolve(null))
+    const result = await this.addEmployerRepository.addEmployer(addEmployerModel)
+    return result
   }
 }
