@@ -60,7 +60,7 @@ describe('DbAddProduct', () => {
     expect(result).toBeNull()
   })
 
-  it('should return an product when addProductRepository success', async () => {
+  it('should return a product when addProductRepository success', async () => {
     const { sut } = makeSut()
     const product = makeFakeProduct()
     const result = await sut.add(product)
