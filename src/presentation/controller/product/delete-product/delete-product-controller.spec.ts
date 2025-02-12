@@ -1,8 +1,8 @@
-import { HttpRequest } from '../../protocols/http-request-protocol'
-import { DeleteProduct } from '../../../domain/usecase/product/delete-product'
+import { HttpRequest } from '../../../protocols/http-request-protocol'
+import { DeleteProduct } from '../../../../domain/usecase/product/delete-product'
 
-import { serverError } from '../../helper/http/server-error'
-import { ok } from '../../helper/http/ok'
+import { serverError } from '../../../helper/http/server-error'
+import { ok } from '../../../helper/http/ok'
 
 import { DeleteProductController } from './delete-product-controller'
 

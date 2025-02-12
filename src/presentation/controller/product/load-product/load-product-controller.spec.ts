@@ -1,11 +1,11 @@
-import { HttpRequest } from '../../protocols/http-request-protocol'
-import { LoadProduct } from '../../../domain/usecase/product/load-product'
-import { ProductModel } from '../../../domain/models/product-model'
+import { HttpRequest } from '../../../protocols/http-request-protocol'
+import { LoadProduct } from '../../../../domain/usecase/product/load-product'
+import { ProductModel } from '../../../../domain/models/product-model'
 import { LoadProductController } from './load-product-controller'
-import { notFound } from '../../helper/http/not-found'
-import { ok } from '../../helper/http/ok'
-import { ServerError } from '../../errors/server-error'
-import { serverError } from '../../helper/http/server-error'
+import { notFound } from '../../../helper/http/not-found'
+import { ok } from '../../../helper/http/ok'
+import { ServerError } from '../../../errors/server-error'
+import { serverError } from '../../../helper/http/server-error'
 
 function makeLoadProductStub (): LoadProduct {
   class LoadProductStub implements LoadProduct {

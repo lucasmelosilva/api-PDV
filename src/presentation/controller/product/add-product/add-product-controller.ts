@@ -1,12 +1,12 @@
-import { ProductModel } from '../../../domain/models/product-model'
-import { AddProduct } from '../../../domain/usecase/product/add-product'
-import { badRequest } from '../../helper/http/bad-request'
-import { ok } from '../../helper/http/ok'
-import { serverError } from '../../helper/http/server-error'
-import { Controller } from '../../protocols/controller-protocol'
-import { HttpRequest } from '../../protocols/http-request-protocol'
-import { HttpResponse } from '../../protocols/http-response-protocol'
-import { Validation } from '../../protocols/validation-protocol'
+import { ProductModel } from '../../../../domain/models/product-model'
+import { AddProduct } from '../../../../domain/usecase/product/add-product'
+import { badRequest } from '../../../helper/http/bad-request'
+import { ok } from '../../../helper/http/ok'
+import { serverError } from '../../../helper/http/server-error'
+import { Controller } from '../../../protocols/controller-protocol'
+import { HttpRequest } from '../../../protocols/http-request-protocol'
+import { HttpResponse } from '../../../protocols/http-response-protocol'
+import { Validation } from '../../../protocols/validation-protocol'
 
 export class AddProductController implements Controller {
   constructor (

@@ -1,11 +1,11 @@
-import { HttpRequest } from '../../protocols/http-request-protocol'
-import { AddProduct, AddProductModel } from '../../../domain/usecase/product/add-product'
-import { Validation } from '../../protocols/validation-protocol'
+import { HttpRequest } from '../../../protocols/http-request-protocol'
+import { AddProduct, AddProductModel } from '../../../../domain/usecase/product/add-product'
+import { Validation } from '../../../protocols/validation-protocol'
 
 import { AddProductController } from './add-product-controller'
-import { ProductModel } from '../../../domain/models/product-model'
-import { serverError } from '../../helper/http/server-error'
-import { ServerError } from '../../errors/server-error'
+import { ProductModel } from '../../../../domain/models/product-model'
+import { serverError } from '../../../helper/http/server-error'
+import { ServerError } from '../../../errors/server-error'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
