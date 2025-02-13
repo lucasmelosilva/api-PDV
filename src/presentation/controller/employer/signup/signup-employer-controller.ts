@@ -1,5 +1,6 @@
 import { AddEmployer } from '../../../../domain/usecase/employer/add-employer'
 import { badRequest } from '../../../helper/http/bad-request'
+import { ok } from '../../../helper/http/ok'
 import { Controller } from '../../../protocols/controller-protocol'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
 import { HttpResponse } from '../../../protocols/http-response-protocol'
@@ -18,7 +19,7 @@ export class SignUpEmployerController implements Controller {
     }
 
     const { passwordToConfirm, ...toAdd } = httpRequest.body
-    await this.addEmployer.add(toAdd)
-    return new Promise(resolve => resolve(null))
+    const result = await this.addEmployer.add(toAdd)
+    return ok(result)
   }
 }
