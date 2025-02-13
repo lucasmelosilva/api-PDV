@@ -1,8 +1,12 @@
 import { Validation } from '../../../protocols/validation-protocol'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
-import { AddEmployer, AddEmployerModel } from '../../../../domain/usecase/employer/add-employer'
+import {
+  AddEmployer,
+  AddEmployerModel
+} from '../../../../domain/usecase/employer/add-employer'
 
 import { badRequest } from '../../../helper/http/bad-request'
+import { ok } from '../../../helper/http/ok'
 
 import { SignUpEmployerController } from './signup-employer-controller'
 import { EmployerModel } from '../../../../domain/models/employer-model'
@@ -89,5 +93,17 @@ describe('SignUpEmployerController', () => {
       employerId: 'any_employer_id',
       companyId: 'any_company_id'
     })
+  })
+
+  it('should return 200 if AddEmployer success', async () => {
+    const { sut } = makeSut()
+    const result = await sut.handle(makeFakeRequest())
+    expect(result).toEqual(ok({
+      id: 'any_id',
+      companyId: 'any_company_id',
+      employerId: 'any_employer_id',
+      name: 'any_name',
+      password: 'any_password'
+    }))
   })
 })
