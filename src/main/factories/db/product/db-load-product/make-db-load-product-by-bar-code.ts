@@ -2,6 +2,6 @@ import { DbLoadProductByBarCode } from '../../../../../data/usecase/product/load
 import { LoadProduct } from '../../../../../domain/usecase/product/load-product'
 import { makeProductMongoRepository } from '../../../infra/make-product-mongo-repository'
 
-export const makeDbLoadProduct = (): LoadProduct => (
+export const makeDbLoadProductByBarCode = (): LoadProduct => (
   new DbLoadProductByBarCode(makeProductMongoRepository())
 )
