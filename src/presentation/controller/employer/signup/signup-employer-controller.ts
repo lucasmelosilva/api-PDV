@@ -1,3 +1,4 @@
+import { AddEmployer } from '../../../../domain/usecase/employer/add-employer'
 import { badRequest } from '../../../helper/http/bad-request'
 import { Controller } from '../../../protocols/controller-protocol'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
@@ -6,7 +7,8 @@ import { Validation } from '../../../protocols/validation-protocol'
 
 export class SignUpEmployerController implements Controller {
   constructor (
-    private readonly validation: Validation
+    private readonly validation: Validation,
+    private readonly addEmployer: AddEmployer
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -14,6 +16,9 @@ export class SignUpEmployerController implements Controller {
     if (error) {
       return badRequest(error)
     }
+
+    const { passwordToConfirm, ...toAdd } = httpRequest.body
+    await this.addEmployer.add(toAdd)
     return new Promise(resolve => resolve(null))
   }
 }
