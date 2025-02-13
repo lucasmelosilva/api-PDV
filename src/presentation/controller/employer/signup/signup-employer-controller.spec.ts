@@ -10,6 +10,8 @@ import { ok } from '../../../helper/http/ok'
 
 import { SignUpEmployerController } from './signup-employer-controller'
 import { EmployerModel } from '../../../../domain/models/employer-model'
+import { ServerError } from '../../../errors/server-error'
+import { serverError } from '../../../helper/http/server-error'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -105,5 +107,16 @@ describe('SignUpEmployerController', () => {
       name: 'any_name',
       password: 'any_password'
     }))
+  })
+
+  it('should return 500 if AddEmployer throws', async () => {
+    const { sut, addEmployerStub } = makeSut()
+    jest.spyOn(addEmployerStub, 'add').mockImplementationOnce(
+      () => {
+        throw new ServerError('any-stack')
+      }
+    )
+    const result = await sut.handle(makeFakeRequest())
+    expect(result).toEqual(serverError(new ServerError('any-stack')))
   })
 })
