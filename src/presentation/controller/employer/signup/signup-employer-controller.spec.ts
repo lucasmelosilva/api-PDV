@@ -1,8 +1,11 @@
 import { Validation } from '../../../protocols/validation-protocol'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
+import { AddEmployer, AddEmployerModel } from '../../../../domain/usecase/employer/add-employer'
+
+import { badRequest } from '../../../helper/http/bad-request'
 
 import { SignUpEmployerController } from './signup-employer-controller'
-import { badRequest } from '../../../helper/http/bad-request'
+import { EmployerModel } from '../../../../domain/models/employer-model'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -14,17 +17,36 @@ function makeValidationStub (): Validation {
   return new ValidationStub()
 }
 
+function makeAddEmployerStub (): AddEmployer {
+  class AddEmployerStub implements AddEmployer {
+    async add (addEmployerModel: AddEmployerModel): Promise<EmployerModel> {
+      return new Promise(resolve => resolve({
+        id: 'any_id',
+        companyId: 'any_company_id',
+        employerId: 'any_employer_id',
+        name: 'any_name',
+        password: 'any_password'
+      }))
+    }
+  }
+
+  return new AddEmployerStub()
+}
+
 interface SutTypes {
   sut: SignUpEmployerController
   validationStub: Validation
+  addEmployerStub: AddEmployer
 }
 
 function makeSut (): SutTypes {
   const validationStub = makeValidationStub()
-  const sut = new SignUpEmployerController(validationStub)
+  const addEmployerStub = makeAddEmployerStub()
+  const sut = new SignUpEmployerController(validationStub, addEmployerStub)
   return {
     sut,
-    validationStub
+    validationStub,
+    addEmployerStub
   }
 }
 
@@ -55,5 +77,17 @@ describe('SignUpEmployerController', () => {
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(error)
     const result = await sut.handle(makeFakeRequest())
     expect(result).toEqual(badRequest(error))
+  })
+
+  it('should call AddEmployer with correct values', async () => {
+    const { sut, addEmployerStub } = makeSut()
+    const addSpy = jest.spyOn(addEmployerStub, 'add')
+    await sut.handle(makeFakeRequest())
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'any_name',
+      password: 'any_password',
+      employerId: 'any_employer_id',
+      companyId: 'any_company_id'
+    })
   })
 })
