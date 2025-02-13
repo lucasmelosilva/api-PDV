@@ -11,7 +11,8 @@ function makeAddEmployerRepositoryStub (): AddEmployerRepository {
         id: 'any_id',
         name: 'any_name',
         password: 'hashed_password',
-        employerId: 'any_employer_id'
+        employerId: 'any_employer_id',
+        companyId: 'any_company_id'
       }))
     }
   }
@@ -32,7 +33,8 @@ function makeFakeEmployer (): AddEmployerModel {
   return {
     name: 'any_name',
     password: 'any_password',
-    employerId: 'any_employer_id'
+    employerId: 'any_employer_id',
+    companyId: 'any_company_id'
   }
 }
 
@@ -87,7 +89,8 @@ describe('DbAddEmployer', () => {
       id: 'any_id',
       name: 'any_name',
       password: 'hashed_password',
-      employerId: 'any_employer_id'
+      employerId: 'any_employer_id',
+      companyId: 'any_company_id'
     })
   })
 

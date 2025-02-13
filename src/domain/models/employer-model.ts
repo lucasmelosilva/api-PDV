@@ -3,4 +3,5 @@ export interface EmployerModel {
   name: string
   password: string
   employerId: string
+  companyId: string
 }

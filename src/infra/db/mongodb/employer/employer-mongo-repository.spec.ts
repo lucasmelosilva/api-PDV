@@ -7,7 +7,8 @@ function makeFakeEmployer (): AddEmployerModel {
   return {
     name: 'any_name',
     password: 'any_password',
-    employerId: 'any_employer_id'
+    employerId: 'any_employer_id',
+    companyId: 'any_company_id'
   }
 }
 let employerCollection: Collection
@@ -36,6 +37,7 @@ describe('EmployerMongoRepository', () => {
       expect(result.name).toBe('any_name')
       expect(result.password).toBe('any_password')
       expect(result.employerId).toBe('any_employer_id')
+      expect(result.companyId).toBe('any_company_id')
     })
   })
 })
