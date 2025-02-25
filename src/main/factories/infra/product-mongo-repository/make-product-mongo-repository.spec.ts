@@ -1,6 +1,6 @@
-import { ProductMongoRepository } from '../../../infra/db/mongodb/product/product-mongo-repository'
+import { ProductMongoRepository } from '../../../../infra/db/mongodb/product/product-mongo-repository'
 import { makeProductMongoRepository } from './make-product-mongo-repository'
-import { MongoHelper } from '../../../infra/helpers/mongo-helper'
+import { MongoHelper } from '../../../../infra/helpers/mongo-helper'
 
 describe('makeProductMongoRepository', () => {
   beforeAll(async () => {
