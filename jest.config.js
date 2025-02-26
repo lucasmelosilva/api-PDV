@@ -2,7 +2,7 @@ const config = {
   roots: ['<rootDir>/src'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/main/config/**',
+    '!<rootDir>/src/main**',
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/**/protocols/**',
     '!<rootDir>/src/**/*-protocols.ts'
