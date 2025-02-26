@@ -3,7 +3,13 @@
     "outDir": "dist",
     "target": "es2020",
     "module": "Commonjs",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "rootDirs": ["src" ],
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },  
   "include": [
     "src"
