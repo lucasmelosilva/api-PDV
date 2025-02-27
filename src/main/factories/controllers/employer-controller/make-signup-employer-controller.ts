@@ -1,4 +1,4 @@
-import { SignUpEmployerController } from '@/presentation/controller/employer/signup/signup-employer-controller'
+import { SignUpEmployerController } from '../../../../presentation/controller/employer/signup/signup-employer-controller'
 import { makeValidation } from '../../validation/make-validation'
 import { makeDbAddEmployer } from '../../db/employer/make-db-add-employer'
 
