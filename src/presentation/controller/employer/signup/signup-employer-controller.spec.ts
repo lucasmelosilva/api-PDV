@@ -61,7 +61,7 @@ function makeFakeRequest (): HttpRequest {
     body: {
       name: 'any_name',
       password: 'any_password',
-      passwordToConfirm: 'any_password',
+      passwordConfirmation: 'any_password',
       employerId: 'any_employer_id',
       companyId: 'any_company_id'
     }

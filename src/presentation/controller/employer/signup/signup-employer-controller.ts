@@ -20,7 +20,7 @@ export class SignUpEmployerController implements Controller {
         return badRequest(error)
       }
 
-      const { passwordToConfirm, ...toAdd } = httpRequest.body
+      const { passwordConfirmation, ...toAdd } = httpRequest.body
       const result = await this.addEmployer.add(toAdd)
       return ok(result)
     } catch (e) {
