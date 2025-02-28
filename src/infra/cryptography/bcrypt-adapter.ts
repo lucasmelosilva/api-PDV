@@ -1,4 +1,4 @@
-import { Hasher } from '@/data/protocol/cryptography/hasher'
+import { Hasher } from '../../data/protocol/cryptography/hasher'
 
 import bcrypt from 'bcrypt'
 

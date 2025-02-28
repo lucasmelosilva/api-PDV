@@ -4,12 +4,8 @@
     "target": "es2020",
     "module": "Commonjs",
     "esModuleInterop": true,
-    "sourceMap": true,
     "rootDirs": ["src" ],
-    "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"]
-    }
+    "baseUrl": "src"
   },  
   "include": [
     "src"
