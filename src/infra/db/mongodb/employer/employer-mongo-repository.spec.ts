@@ -74,5 +74,18 @@ describe('EmployerMongoRepository', () => {
       const result = await sut.updateAccessToken('any_id', 'any_accessToken')
       expect(result).toBeFalsy()
     })
+
+    it('should return true on success', async () => {
+      const { insertedId } = await employerCollection.insertOne(makeFakeEmployer())
+      const employerBeforeUpdate = await employerCollection.findOne({ _id: insertedId })
+      expect(employerBeforeUpdate?.accessToken).toBeFalsy()
+
+      const sut = makeSut()
+      const result = await sut.updateAccessToken(insertedId, 'any_accessToken')
+      expect(result).toBeTruthy()
+
+      const employerAfterUpdate = await employerCollection.findOne({ _id: insertedId })
+      expect(employerAfterUpdate?.accessToken).toBe('any_accessToken')
+    })
   })
 })
