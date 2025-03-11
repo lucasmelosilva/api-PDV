@@ -67,4 +67,12 @@ describe('EmployerMongoRepository', () => {
       expect(result.companyId).toBe('any_company_id')
     })
   })
+
+  describe('updateAccessToken()', () => {
+    it('should return false on fail', async () => {
+      const sut = makeSut()
+      const result = await sut.updateAccessToken('any_id', 'any_accessToken')
+      expect(result).toBeFalsy()
+    })
+  })
 })
