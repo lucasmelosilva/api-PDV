@@ -20,7 +20,12 @@ export class EmployerMongoRepository implements
     return MongoHelper.map(result)
   }
 
-  async updateAccessToken (id: string, accessToken: string): Promise<boolean> {
-    return new Promise(resolve => resolve(false))
+  async updateAccessToken (id: any, accessToken: string): Promise<boolean> {
+    const employerCollection = MongoHelper.getCollection('employers')
+    const result = await employerCollection.updateOne({ _id: id }, { $set: { accessToken } })
+    if (result.modifiedCount > 0) {
+      return true
+    }
+    return false
   }
 }

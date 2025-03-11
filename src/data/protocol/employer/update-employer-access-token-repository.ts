@@ -1,3 +1,3 @@
 export interface UpdateEmployerAccessTokenRepository {
-  updateAccessToken(id: string, accessToken: string): Promise<boolean>
+  updateAccessToken(id: any, accessToken: string): Promise<boolean>
 }
