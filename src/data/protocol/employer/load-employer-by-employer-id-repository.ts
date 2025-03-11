@@ -1,5 +1,5 @@
 import { EmployerModel } from '../../../domain/models/employer-model'
 
-export interface LoadEmployerByEmployerId {
+export interface LoadEmployerByEmployerIdRepository {
   loadByEmployerId (employerId: string): Promise<EmployerModel>
 }
