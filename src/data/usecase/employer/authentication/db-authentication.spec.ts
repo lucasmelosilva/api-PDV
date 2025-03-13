@@ -2,6 +2,7 @@ import { EmployerModel } from '../../../../domain/models/employer-model'
 import { AuthenticationParams } from '../../../../domain/usecase/employer/authentication'
 import { LoadEmployerByEmployerIdRepository } from '../../../protocol/employer/load-employer-by-employer-id-repository'
 import { HashComparer } from '../../../protocol/cryptography/hash-comparer'
+import { Encrypter } from '../../../protocol/cryptography/encrypter'
 
 import { DbAuthentication } from './db-authentication'
 
@@ -12,6 +13,15 @@ function makeHashComparer (): HashComparer {
     }
   }
   return new HashComparerStub()
+}
+
+function makeEncrypter (): Encrypter {
+  class EncrypterStub implements Encrypter {
+    async encrypt (plaintext: string): Promise<string> {
+      return new Promise(resolve => resolve('encrypted_value'))
+    }
+  }
+  return new EncrypterStub()
 }
 
 function makeLoadEmployerByEmployerIdRepository (): LoadEmployerByEmployerIdRepository {
@@ -34,17 +44,24 @@ interface SutTypes {
   sut: DbAuthentication
   loadEmployerByEmployerIdRepositoryStub: LoadEmployerByEmployerIdRepository
   hashComparerStub: HashComparer
+  encrypterStub: Encrypter
 }
 
 function makeSut (): SutTypes {
   const loadEmployerByEmployerIdRepositoryStub = makeLoadEmployerByEmployerIdRepository()
   const hashComparerStub = makeHashComparer()
-  const sut = new DbAuthentication(loadEmployerByEmployerIdRepositoryStub, hashComparerStub)
+  const encrypterStub = makeEncrypter()
+  const sut = new DbAuthentication(
+    loadEmployerByEmployerIdRepositoryStub,
+    hashComparerStub,
+    encrypterStub
+  )
 
   return {
     sut,
     loadEmployerByEmployerIdRepositoryStub,
-    hashComparerStub
+    hashComparerStub,
+    encrypterStub
   }
 }
 
@@ -86,5 +103,13 @@ describe('DbAuthentication', () => {
       .mockReturnValueOnce(new Promise(resolve => resolve(false)))
     const result = await sut.auth(makeFakeAuth())
     expect(result).toBeNull()
+  })
+
+  it('should call Encrypt if HashComparer succeeds', async () => {
+    const { sut, encrypterStub } = makeSut()
+    const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
+    const authParams = makeFakeAuth()
+    await sut.auth(authParams)
+    expect(encryptSpy).toHaveBeenCalledWith('any_id')
   })
 })
