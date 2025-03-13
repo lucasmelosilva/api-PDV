@@ -50,4 +50,12 @@ describe('DbAuthentication', () => {
     await sut.auth(authParams)
     expect(loadSpy).toHaveBeenCalledWith(authParams.employerId)
   })
+
+  it('should return null if LoadEmployerByEmployerIdRepository fails', async () => {
+    const { sut, loadEmployerByEmployerIdRepositoryStub } = makeSut()
+    jest.spyOn(loadEmployerByEmployerIdRepositoryStub, 'loadByEmployerId')
+      .mockReturnValueOnce(new Promise(resolve => resolve(null as any)))
+    const result = await sut.auth(makeFakeAuth())
+    expect(result).toBeNull()
+  })
 })
