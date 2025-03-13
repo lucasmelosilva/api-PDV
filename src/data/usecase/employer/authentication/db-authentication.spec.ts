@@ -1,8 +1,18 @@
 import { EmployerModel } from '../../../../domain/models/employer-model'
 import { AuthenticationParams } from '../../../../domain/usecase/employer/authentication'
 import { LoadEmployerByEmployerIdRepository } from '../../../protocol/employer/load-employer-by-employer-id-repository'
+import { HashComparer } from '../../../protocol/cryptography/hash-comparer'
 
 import { DbAuthentication } from './db-authentication'
+
+function makeHashComparer (): HashComparer {
+  class HashComparerStub implements HashComparer {
+    async compare (plaitext: string, digest: string): Promise<boolean> {
+      return new Promise(resolve => resolve(true))
+    }
+  }
+  return new HashComparerStub()
+}
 
 function makeLoadEmployerByEmployerIdRepository (): LoadEmployerByEmployerIdRepository {
   class LoadEmployerByEmployerIdRepositoryStub implements LoadEmployerByEmployerIdRepository {
@@ -12,7 +22,7 @@ function makeLoadEmployerByEmployerIdRepository (): LoadEmployerByEmployerIdRepo
         employerId: 'dasdweqjojo1qew',
         id: 'any_id',
         name: 'any_name',
-        password: 'any_password'
+        password: 'hashed_password'
       }))
     }
   }
@@ -23,15 +33,18 @@ function makeLoadEmployerByEmployerIdRepository (): LoadEmployerByEmployerIdRepo
 interface SutTypes {
   sut: DbAuthentication
   loadEmployerByEmployerIdRepositoryStub: LoadEmployerByEmployerIdRepository
+  hashComparerStub: HashComparer
 }
 
 function makeSut (): SutTypes {
   const loadEmployerByEmployerIdRepositoryStub = makeLoadEmployerByEmployerIdRepository()
-  const sut = new DbAuthentication(loadEmployerByEmployerIdRepositoryStub)
+  const hashComparerStub = makeHashComparer()
+  const sut = new DbAuthentication(loadEmployerByEmployerIdRepositoryStub, hashComparerStub)
 
   return {
     sut,
-    loadEmployerByEmployerIdRepositoryStub
+    loadEmployerByEmployerIdRepositoryStub,
+    hashComparerStub
   }
 }
 
@@ -57,5 +70,13 @@ describe('DbAuthentication', () => {
       .mockReturnValueOnce(new Promise(resolve => resolve(null as any)))
     const result = await sut.auth(makeFakeAuth())
     expect(result).toBeNull()
+  })
+
+  it('should call HashComparer with correct values', async () => {
+    const { sut, hashComparerStub } = makeSut()
+    const compareSpy = jest.spyOn(hashComparerStub, 'compare')
+    const authParams = makeFakeAuth()
+    await sut.auth(authParams)
+    expect(compareSpy).toHaveBeenCalledWith(authParams.password, 'hashed_password')
   })
 })
