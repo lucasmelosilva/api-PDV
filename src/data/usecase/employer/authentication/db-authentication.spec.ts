@@ -1,6 +1,7 @@
 import { EmployerModel } from '../../../../domain/models/employer-model'
 import { AuthenticationParams } from '../../../../domain/usecase/employer/authentication'
 import { LoadEmployerByEmployerIdRepository } from '../../../protocol/employer/load-employer-by-employer-id-repository'
+import { UpdateEmployerAccessTokenRepository } from '../../../protocol/employer/update-employer-access-token-repository'
 import { HashComparer } from '../../../protocol/cryptography/hash-comparer'
 import { Encrypter } from '../../../protocol/cryptography/encrypter'
 
@@ -13,6 +14,15 @@ function makeHashComparer (): HashComparer {
     }
   }
   return new HashComparerStub()
+}
+
+function makeUpdateEmployerAccessTokenRepository (): UpdateEmployerAccessTokenRepository {
+  class UpdateEmployerAccessTokenRepositoryStub implements UpdateEmployerAccessTokenRepository {
+    async updateAccessToken (id: any, accessToken: string): Promise<boolean> {
+      return new Promise(resolve => resolve(true))
+    }
+  }
+  return new UpdateEmployerAccessTokenRepositoryStub()
 }
 
 function makeEncrypter (): Encrypter {
@@ -45,23 +55,27 @@ interface SutTypes {
   loadEmployerByEmployerIdRepositoryStub: LoadEmployerByEmployerIdRepository
   hashComparerStub: HashComparer
   encrypterStub: Encrypter
+  updateEmployerAccessTokenRepositoryStub: UpdateEmployerAccessTokenRepository
 }
 
 function makeSut (): SutTypes {
   const loadEmployerByEmployerIdRepositoryStub = makeLoadEmployerByEmployerIdRepository()
   const hashComparerStub = makeHashComparer()
   const encrypterStub = makeEncrypter()
+  const updateEmployerAccessTokenRepositoryStub = makeUpdateEmployerAccessTokenRepository()
   const sut = new DbAuthentication(
     loadEmployerByEmployerIdRepositoryStub,
     hashComparerStub,
-    encrypterStub
+    encrypterStub,
+    updateEmployerAccessTokenRepositoryStub
   )
 
   return {
     sut,
     loadEmployerByEmployerIdRepositoryStub,
     hashComparerStub,
-    encrypterStub
+    encrypterStub,
+    updateEmployerAccessTokenRepositoryStub
   }
 }
 
@@ -111,5 +125,13 @@ describe('DbAuthentication', () => {
     const authParams = makeFakeAuth()
     await sut.auth(authParams)
     expect(encryptSpy).toHaveBeenCalledWith('any_id')
+  })
+
+  it('should call UpdateEmployerAccessToken if Encrypter succeeds', async () => {
+    const { sut, updateEmployerAccessTokenRepositoryStub } = makeSut()
+    const updateSpy = jest.spyOn(updateEmployerAccessTokenRepositoryStub, 'updateAccessToken')
+    const authParams = makeFakeAuth()
+    await sut.auth(authParams)
+    expect(updateSpy).toHaveBeenCalledWith('any_id', 'encrypted_value')
   })
 })
