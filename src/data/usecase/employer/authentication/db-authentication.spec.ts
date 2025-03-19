@@ -42,7 +42,8 @@ function makeLoadEmployerByEmployerIdRepository (): LoadEmployerByEmployerIdRepo
         employerId: 'dasdweqjojo1qew',
         id: 'any_id',
         name: 'any_name',
-        password: 'hashed_password'
+        password: 'hashed_password',
+        role: 'cashier'
       }))
     }
   }

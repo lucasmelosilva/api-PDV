@@ -8,7 +8,8 @@ function makeFakeEmployer (): AddEmployerModel {
     name: 'any_name',
     password: 'any_password',
     employerId: 'any_employer_id',
-    companyId: 'any_company_id'
+    companyId: 'any_company_id',
+    role: 'cashier'
   }
 }
 
