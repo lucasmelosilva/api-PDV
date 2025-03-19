@@ -134,4 +134,14 @@ describe('DbAuthentication', () => {
     await sut.auth(authParams)
     expect(updateSpy).toHaveBeenCalledWith('any_id', 'encrypted_value')
   })
+
+  it('should return an AuthenticationResult if UpdateEmployerAccessToken succeeds', async () => {
+    const { sut } = makeSut()
+    const result = await sut.auth(makeFakeAuth())
+    expect(result).toEqual({
+      name: 'any_name',
+      companyId: 'any_company_id',
+      accessToken: 'encrypted_value'
+    })
+  })
 })
