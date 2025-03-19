@@ -10,4 +10,5 @@ export interface AuthenticationParams {
 export interface AuthenticationResult {
   accessToken: string
   name: string
+  companyId: string
 }
