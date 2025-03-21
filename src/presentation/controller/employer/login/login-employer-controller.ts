@@ -1,7 +1,8 @@
-import { Controller } from 'presentation/protocols/controller-protocol'
-import { HttpRequest } from 'presentation/protocols/http-request-protocol'
-import { HttpResponse } from 'presentation/protocols/http-response-protocol'
-import { Validation } from 'presentation/protocols/validation-protocol'
+import { badRequest } from '../../../helper/http/bad-request'
+import { Controller } from '../../../protocols/controller-protocol'
+import { HttpRequest } from '../../../protocols/http-request-protocol'
+import { HttpResponse } from '../../../protocols/http-response-protocol'
+import { Validation } from '../../../protocols/validation-protocol'
 
 export class LoginEmployerController implements Controller {
   constructor (
@@ -10,7 +11,10 @@ export class LoginEmployerController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     const { body } = httpRequest
-    this.validation.validate(body)
+    const error = this.validation.validate(body)
+    if (error) {
+      return badRequest(error)
+    }
     return new Promise(resolve => resolve(null))
   }
 }
