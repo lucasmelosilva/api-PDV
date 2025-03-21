@@ -1,4 +1,5 @@
 import { badRequest } from '../../../helper/http/bad-request'
+import { unauthorized } from '../../../helper/http/unauthorized'
 import { Controller } from '../../../protocols/controller-protocol'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
 import { HttpResponse } from '../../../protocols/http-response-protocol'
@@ -17,7 +18,10 @@ export class LoginEmployerController implements Controller {
     if (error) {
       return badRequest(error)
     }
-    await this.authentication.auth(body)
+    const authenticationModel = await this.authentication.auth(body)
+    if (!authenticationModel) {
+      return unauthorized()
+    }
 
     return null
   }
