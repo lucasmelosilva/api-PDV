@@ -11,6 +11,8 @@ import {
 } from '../../../../domain/usecase/employer/authentication'
 
 import { LoginEmployerController } from './login-employer-controller'
+import { ServerError } from '../../../errors/server-error'
+import { serverError } from '../../../helper/http/server-error'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -101,5 +103,16 @@ describe('LoginEmployerController', () => {
       companyId: 'any_company_id',
       name: 'any_name'
     }))
+  })
+
+  it('should return 500 if Authentication throws', async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(
+      () => {
+        throw new ServerError('any-stack')
+      }
+    )
+    const result = await sut.handle(makeFakeRequest())
+    expect(result).toEqual(serverError(new ServerError('any-stack')))
   })
 })
