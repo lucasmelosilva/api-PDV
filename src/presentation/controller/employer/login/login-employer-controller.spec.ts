@@ -1,4 +1,5 @@
 import { badRequest } from '../../../helper/http/bad-request'
+import { unauthorized } from '../../../helper/http/unauthorized'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
 import { Validation } from '../../../protocols/validation-protocol'
 
@@ -81,5 +82,13 @@ describe('LoginEmployerController', () => {
     const request = makeFakeRequest()
     await sut.handle(request)
     expect(authSpy).toHaveBeenCalledWith(request.body)
+  })
+
+  it('should return 401 if Authentication fails', async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(
+      new Promise(resolve => resolve(null as any)))
+    const result = await sut.handle(makeFakeRequest())
+    expect(result).toEqual(unauthorized())
   })
 })
