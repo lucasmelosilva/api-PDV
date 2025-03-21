@@ -1,5 +1,6 @@
 import { badRequest } from '../../../helper/http/bad-request'
 import { unauthorized } from '../../../helper/http/unauthorized'
+import { ok } from '../../../helper/http/ok'
 import { Controller } from '../../../protocols/controller-protocol'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
 import { HttpResponse } from '../../../protocols/http-response-protocol'
@@ -22,7 +23,6 @@ export class LoginEmployerController implements Controller {
     if (!authenticationModel) {
       return unauthorized()
     }
-
-    return null
+    return ok(authenticationModel)
   }
 }
