@@ -1,5 +1,6 @@
 import { badRequest } from '../../../helper/http/bad-request'
 import { unauthorized } from '../../../helper/http/unauthorized'
+import { ok } from '../../../helper/http/ok'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
 import { Validation } from '../../../protocols/validation-protocol'
 
@@ -90,5 +91,15 @@ describe('LoginEmployerController', () => {
       new Promise(resolve => resolve(null as any)))
     const result = await sut.handle(makeFakeRequest())
     expect(result).toEqual(unauthorized())
+  })
+
+  it('should return 200 if Authentication succeeds', async () => {
+    const { sut } = makeSut()
+    const result = await sut.handle(makeFakeRequest())
+    expect(result).toEqual(ok({
+      accessToken: 'any_token',
+      companyId: 'any_company_id',
+      name: 'any_name'
+    }))
   })
 })
