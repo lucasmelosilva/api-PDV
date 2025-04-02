@@ -4,6 +4,7 @@ import { EmployerModel } from '../../../../domain/models/employer-model'
 import { AddEmployerModel } from '../../../../domain/usecase/employer/add-employer'
 import { MongoHelper } from '../../../helpers/mongo-helper'
 import { UpdateEmployerAccessTokenRepository } from 'data/protocol/employer/update-employer-access-token-repository'
+import { ObjectId } from 'mongodb'
 
 export class EmployerMongoRepository implements
   AddEmployerRepository,
@@ -22,7 +23,7 @@ export class EmployerMongoRepository implements
 
   async updateAccessToken (id: any, accessToken: string): Promise<boolean> {
     const employerCollection = MongoHelper.getCollection('employers')
-    const result = await employerCollection.updateOne({ _id: id }, { $set: { accessToken } })
+    const result = await employerCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } })
     if (result.modifiedCount > 0) {
       return true
     }

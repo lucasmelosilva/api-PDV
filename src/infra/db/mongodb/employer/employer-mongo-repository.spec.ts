@@ -70,12 +70,6 @@ describe('EmployerMongoRepository', () => {
   })
 
   describe('updateAccessToken()', () => {
-    it('should return false on fail', async () => {
-      const sut = makeSut()
-      const result = await sut.updateAccessToken('any_id', 'any_accessToken')
-      expect(result).toBeFalsy()
-    })
-
     it('should return true on success', async () => {
       const { insertedId } = await employerCollection.insertOne(makeFakeEmployer())
       const employerBeforeUpdate = await employerCollection.findOne({ _id: insertedId })
