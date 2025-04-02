@@ -31,7 +31,8 @@ function makeAddEmployerStub (): AddEmployer {
         companyId: 'any_company_id',
         employerId: 'any_employer_id',
         name: 'any_name',
-        password: 'any_password'
+        password: 'any_password',
+        role: 'cashier'
       }))
     }
   }
@@ -63,7 +64,8 @@ function makeFakeRequest (): HttpRequest {
       password: 'any_password',
       passwordConfirmation: 'any_password',
       employerId: 'any_employer_id',
-      companyId: 'any_company_id'
+      companyId: 'any_company_id',
+      role: 'cashier'
     }
   }
 }
@@ -93,7 +95,8 @@ describe('SignUpEmployerController', () => {
       name: 'any_name',
       password: 'any_password',
       employerId: 'any_employer_id',
-      companyId: 'any_company_id'
+      companyId: 'any_company_id',
+      role: 'cashier'
     })
   })
 
@@ -105,7 +108,8 @@ describe('SignUpEmployerController', () => {
       companyId: 'any_company_id',
       employerId: 'any_employer_id',
       name: 'any_name',
-      password: 'any_password'
+      password: 'any_password',
+      role: 'cashier'
     }))
   })
 

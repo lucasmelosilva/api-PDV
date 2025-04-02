@@ -4,4 +4,5 @@ export interface EmployerModel {
   password: string
   employerId: string
   companyId: string
+  role: 'manager' | 'cashier' | 'super'
 }
