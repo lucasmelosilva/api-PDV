@@ -4,4 +4,5 @@ export interface ProductModel {
   barCode: string
   imageUrl: string
   price: number
+  companyId: string
 }

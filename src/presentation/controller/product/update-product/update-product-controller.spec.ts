@@ -25,7 +25,8 @@ function makeUpdateProductStub (): UpdateProduct {
         name: 'updated_name',
         barCode: 'any_bar_code',
         imageUrl: 'any_image_url',
-        price: 1.99
+        price: 1.99,
+        companyId: 'any_company_id'
       }))
     }
   }
@@ -57,6 +58,7 @@ function makeFakeHttpRequest (): HttpRequest {
       name: 'any_name',
       barCode: 'any_bar_code',
       imageUrl: 'any_image_url',
+      companyId: 'any_company_id',
       price: 1.99
     }
   }
@@ -96,7 +98,8 @@ describe('UpdateProductController', () => {
       name: 'updated_name',
       barCode: 'any_bar_code',
       imageUrl: 'any_image_url',
-      price: 1.99
+      price: 1.99,
+      companyId: 'any_company_id'
     }))
   })
 })

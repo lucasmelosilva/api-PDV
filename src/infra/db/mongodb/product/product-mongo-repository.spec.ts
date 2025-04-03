@@ -26,7 +26,8 @@ describe('ProductMongoRepository', () => {
         name: 'any_name',
         barCode: 'any_bar_code',
         imageUrl: 'any_image_url',
-        price: 212.32
+        price: 212.32,
+        companyId: 'any_company_id'
       })
       expect(result).toBeTruthy()
       expect(result.id).toBeTruthy()
@@ -102,7 +103,8 @@ describe('ProductMongoRepository', () => {
         name: 'any_name',
         barCode: 'any_bar_code',
         imageUrl: 'any_image_url',
-        price: 11.25
+        price: 11.25,
+        companyId: 'any_company_id'
       })
 
       expect(productAfterUpdated).toBeTruthy()

@@ -12,7 +12,8 @@ function makeAddProductRepositoryStub (): AddProductRepository {
         name: 'any-name',
         barCode: 'any-bar-code',
         imageUrl: 'any-image-url',
-        price: 23.1
+        price: 23.1,
+        companyId: 'any-company-id'
       }))
     }
   }
@@ -39,7 +40,8 @@ function makeFakeProduct (): AddProductModel {
     name: 'any-name',
     barCode: 'any-bar-code',
     imageUrl: 'any-image-url',
-    price: 23.1
+    price: 23.1,
+    companyId: 'any-company-id'
   }
 }
 
@@ -69,7 +71,8 @@ describe('DbAddProduct', () => {
       name: 'any-name',
       barCode: 'any-bar-code',
       imageUrl: 'any-image-url',
-      price: 23.1
+      price: 23.1,
+      companyId: 'any-company-id'
     })
   })
 

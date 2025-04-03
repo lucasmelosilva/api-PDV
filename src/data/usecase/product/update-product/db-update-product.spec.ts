@@ -9,7 +9,8 @@ function makeFakeProduct (): UpdateProductModel {
     name: 'any-name',
     barCode: 'any-bar-code',
     imageUrl: 'any-image-url',
-    price: 23.1
+    price: 23.1,
+    companyId: 'any-company-id'
   }
 }
 
@@ -21,7 +22,8 @@ function makeUpdateProductRepositoryStub (): UpdateProductRepository {
         name: 'updated-name',
         barCode: 'updated-bar-code',
         imageUrl: 'updated-image-url',
-        price: 23.1
+        price: 23.1,
+        companyId: 'any-company-id'
       }))
     }
   }
@@ -68,7 +70,8 @@ describe('DbUpdateProduct', () => {
       name: 'updated-name',
       barCode: 'updated-bar-code',
       imageUrl: 'updated-image-url',
-      price: 23.1
+      price: 23.1,
+      companyId: 'any-company-id'
     })
   })
 })

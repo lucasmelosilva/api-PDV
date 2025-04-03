@@ -10,7 +10,8 @@ function makeLoadProductByBarCodeRepositoryStub (): LoadProductByBarCodeReposito
         name: 'any-name',
         barCode: 'any-bar-code',
         imageUrl: 'any-image-url',
-        price: 23.1
+        price: 23.1,
+        companyId: 'any-company-id'
       }))
     }
   }
@@ -48,7 +49,8 @@ describe('DbLoadProductByBarCode', () => {
       name: 'any-name',
       barCode: 'any-bar-code',
       imageUrl: 'any-image-url',
-      price: 23.1
+      price: 23.1,
+      companyId: 'any-company-id'
     })
   })
 

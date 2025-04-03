@@ -15,7 +15,8 @@ function makeLoadProductStub (): LoadProduct {
         name: 'any_name',
         barCode: 'any_bar_code',
         imageUrl: 'any_image_url',
-        price: 1.99
+        price: 1.99,
+        companyId: 'any_company_id'
       }))
     }
   }
@@ -70,7 +71,8 @@ describe('LoadProductController', () => {
       name: 'any_name',
       barCode: 'any_bar_code',
       imageUrl: 'any_image_url',
-      price: 1.99
+      price: 1.99,
+      companyId: 'any_company_id'
     }))
   })
 

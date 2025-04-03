@@ -25,7 +25,8 @@ function makeAddProductStub (): AddProduct {
         name: 'any-name',
         barCode: 'any-bar-code',
         imageUrl: 'any-image-url',
-        price: 23.1
+        price: 23.1,
+        companyId: 'any-company-id'
       }))
     }
   }
@@ -38,7 +39,8 @@ function makeFakeHttpRequest (): HttpRequest {
     body: {
       name: 'any_name',
       barCode: 'any_bar_code',
-      price: 12.30
+      price: 12.30,
+      companyId: 'any_company_id'
     },
     file: {
       filename: 'any_file'
@@ -101,6 +103,7 @@ describe('ProductCreate Controller', () => {
         name: 'any-name',
         barCode: 'any-bar-code',
         imageUrl: 'any-image-url',
+        companyId: 'any-company-id',
         price: 23.1
       }
     })

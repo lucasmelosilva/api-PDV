@@ -4,7 +4,7 @@ import { makeDbUpdateProduct } from '../../../db/product/db-update-product/make-
 import { makeValidation } from '../../../validation/make-validation'
 
 export const makeUpdateProduct = (): Controller => {
-  const fields = ['id', 'name', 'barCode', 'imageUrl', 'price']
+  const fields = ['id', 'name', 'barCode', 'imageUrl', 'price', 'companyId']
   const validationComposite = makeValidation(fields)
   const dbUpdateProduct = makeDbUpdateProduct()
   return new UpdateProductController(validationComposite, dbUpdateProduct)
