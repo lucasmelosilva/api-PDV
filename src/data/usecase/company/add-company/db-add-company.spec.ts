@@ -81,4 +81,10 @@ describe('DbAddCompany', () => {
     const result = await sut.add(makeFakeCompany())
     expect(result).toBeNull()
   })
+
+  it('should return a CompanyModel on success', async () => {
+    const { sut } = makeSut()
+    const result = await sut.add(makeFakeCompany())
+    expect(result).toEqual({ id: 'any_id', name: 'any_name', cnpj: 'encrypted_value' })
+  })
 })
