@@ -5,6 +5,7 @@ import { CompanyModel } from '../../../../domain/models/company-model'
 
 import { AddCompanyController } from './add-company-controller'
 import { conflict } from '../../../helper/http/conflict'
+import { ok } from '../../../helper/http/ok'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -87,5 +88,15 @@ describe('AddCompanyController', () => {
     jest.spyOn(addCompanyStub, 'add').mockReturnValueOnce(new Promise(resolve => resolve(null as any)))
     const response = await sut.handle(makeFakeHttpRequest())
     expect(response).toEqual(conflict())
+  })
+
+  it('should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response).toEqual(ok({
+      id: 'any_id',
+      name: 'any_name',
+      cnpj: 'any_cnpj'
+    }))
   })
 })
