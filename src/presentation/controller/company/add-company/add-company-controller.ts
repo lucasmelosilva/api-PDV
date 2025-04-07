@@ -1,6 +1,7 @@
 import { AddCompany } from '../../../../domain/usecase/company/add-company'
 import { badRequest } from '../../../helper/http/bad-request'
 import { conflict } from '../../../helper/http/conflict'
+import { ok } from '../../../helper/http/ok'
 import { Controller } from '../../../protocols/controller-protocol'
 import { HttpRequest } from '../../../protocols/http-request-protocol'
 import { HttpResponse } from '../../../protocols/http-response-protocol'
@@ -18,7 +19,10 @@ export class AddCompanyController implements Controller {
     if (error) {
       return badRequest(error)
     }
-    await this.addCompany.add(body)
-    return conflict()
+    const result = await this.addCompany.add(body)
+    if (!result) {
+      return conflict()
+    }
+    return ok(result)
   }
 }
