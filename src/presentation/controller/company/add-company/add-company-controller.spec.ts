@@ -6,6 +6,7 @@ import { CompanyModel } from '../../../../domain/models/company-model'
 import { AddCompanyController } from './add-company-controller'
 import { conflict } from '../../../helper/http/conflict'
 import { ok } from '../../../helper/http/ok'
+import { serverError } from '../../../helper/http/server-error'
 
 function makeValidationStub (): Validation {
   class ValidationStub implements Validation {
@@ -98,5 +99,14 @@ describe('AddCompanyController', () => {
       name: 'any_name',
       cnpj: 'any_cnpj'
     }))
+  })
+
+  it('should return 500 if AddCompany throws', async () => {
+    const { sut, addCompanyStub } = makeSut()
+    jest.spyOn(addCompanyStub, 'add').mockReturnValueOnce(
+      new Promise((resolve, reject) => reject(new Error('any_error')))
+    )
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response).toEqual(serverError(new Error('any_error')))
   })
 })
