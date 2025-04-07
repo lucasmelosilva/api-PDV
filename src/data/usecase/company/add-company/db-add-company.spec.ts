@@ -74,4 +74,11 @@ describe('DbAddCompany', () => {
     await sut.add(fakeCompany)
     expect(addCompanySpy).toHaveBeenCalledWith({ ...fakeCompany, cnpj: 'encrypted_value' })
   })
+
+  it('should return null if AddCompanyRepository returns null', async () => {
+    const { sut, addCompanyRepositoryStub } = makeSut()
+    jest.spyOn(addCompanyRepositoryStub, 'addCompany').mockReturnValueOnce(new Promise(resolve => resolve(null as any)))
+    const result = await sut.add(makeFakeCompany())
+    expect(result).toBeNull()
+  })
 })
