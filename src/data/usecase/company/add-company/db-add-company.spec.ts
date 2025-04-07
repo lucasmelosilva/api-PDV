@@ -87,4 +87,11 @@ describe('DbAddCompany', () => {
     const result = await sut.add(makeFakeCompany())
     expect(result).toEqual({ id: 'any_id', name: 'any_name', cnpj: 'encrypted_value' })
   })
+
+  it('should throw if AddCompanyRepository throws', async () => {
+    const { sut, addCompanyRepositoryStub } = makeSut()
+    jest.spyOn(addCompanyRepositoryStub, 'addCompany').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error('any_error'))))
+    const promise = sut.add(makeFakeCompany())
+    await expect(promise).rejects.toThrow()
+  })
 })
