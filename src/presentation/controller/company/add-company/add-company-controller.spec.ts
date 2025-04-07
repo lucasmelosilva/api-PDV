@@ -44,4 +44,14 @@ describe('AddCompanyController', () => {
     await sut.handle(request)
     expect(validateSpy).toHaveBeenCalledWith({ ...request.body })
   })
+
+  it('should return 400 if Validation fails', async () => {
+    const { sut, validationStub } = makeSut()
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error('any error'))
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response).toEqual({
+      status: 400,
+      body: new Error('any error')
+    })
+  })
 })
