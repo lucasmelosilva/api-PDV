@@ -1,5 +1,7 @@
 import { HttpRequest } from '../../../protocols/http-request-protocol'
 import { Validation } from '../../../protocols/validation-protocol'
+import { AddCompany, AddCompanyModel } from '../../../../domain/usecase/company/add-company'
+import { CompanyModel } from '../../../../domain/models/company-model'
 
 import { AddCompanyController } from './add-company-controller'
 
@@ -13,17 +15,33 @@ function makeValidationStub (): Validation {
   return new ValidationStub()
 }
 
+function makeAddCompanyStub (): AddCompany {
+  class AddCompanyStub implements AddCompany {
+    async add (addCompanyModel: AddCompanyModel): Promise<CompanyModel> {
+      return new Promise(resolve => resolve({
+        id: 'any_id',
+        name: 'any_name',
+        cnpj: 'any_cnpj'
+      }))
+    }
+  }
+  return new AddCompanyStub()
+}
+
 interface SutTypes {
   sut: AddCompanyController
   validationStub: Validation
+  addCompanyStub: AddCompany
 }
 
 function makeSut (): SutTypes {
   const validationStub = makeValidationStub()
-  const sut = new AddCompanyController(validationStub)
+  const addCompanyStub = makeAddCompanyStub()
+  const sut = new AddCompanyController(validationStub, addCompanyStub)
   return {
     sut,
-    validationStub
+    validationStub,
+    addCompanyStub
   }
 }
 
@@ -53,5 +71,13 @@ describe('AddCompanyController', () => {
       status: 400,
       body: new Error('any error')
     })
+  })
+
+  it('should call AddCompany with correct values', async () => {
+    const { sut, addCompanyStub } = makeSut()
+    const addSpy = jest.spyOn(addCompanyStub, 'add')
+    const request = makeFakeHttpRequest()
+    await sut.handle(request)
+    expect(addSpy).toHaveBeenCalledWith({ ...request.body })
   })
 })
