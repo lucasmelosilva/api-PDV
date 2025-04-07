@@ -11,7 +11,10 @@ export class DbAddCompany implements AddCompany {
 
   async add (addCompanyModel: AddCompanyModel): Promise<CompanyModel> {
     const encryptedValue = await this.encrypter.encrypt(addCompanyModel.cnpj)
-    await this.addCompanyRepository.addCompany({ ...addCompanyModel, cnpj: encryptedValue })
+    if (encryptedValue) {
+      const result = await this.addCompanyRepository.addCompany({ ...addCompanyModel, cnpj: encryptedValue })
+      return result
+    }
     return null
   }
 }
