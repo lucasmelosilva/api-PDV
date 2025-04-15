@@ -5,6 +5,8 @@
   "main": "src/main/server.ts",
   "scripts": {
     "dev": "nodemon",
+    "build": "tsc",
+    "start": "node dist/main/server.js",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
